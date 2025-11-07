@@ -8,7 +8,7 @@ class Query(BaseModel):
     prompt: str
 
 
-app = FastAPI(title="backend", version="1.0")
+app = FastAPI(title="backend-server", version="1.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -17,13 +17,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+#  TODO: вынести все ендпойнты в отдельный файл endpoints.py
+
 
 @app.get("/")
 def root():
-    return {"message": "backend is running"}
+    return {"message": "Backend is running"}
 
 
-@app.post("/ask")
+@app.post("/send-prompt")
 async def ask_llm(query: Query):
-    response_text = f"Answer: '{query.prompt}'"
+    print("Asked: ", query.prompt)
+
+    response_text = f"Answer: 0 eur"  # TODO: ask LLM
+
     return {"answer": response_text}
