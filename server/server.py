@@ -3,6 +3,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
+from llm.inference import receiver
+
 
 class Query(BaseModel):
     prompt: str
@@ -29,6 +31,6 @@ def root():
 async def ask_llm(query: Query):
     print("Asked: ", query.prompt)
 
-    response_text = f"Answer: 0 eur"  # TODO: ask LLM
+    response_text = receiver(query.prompt)
 
     return {"answer": response_text}
